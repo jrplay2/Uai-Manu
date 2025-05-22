@@ -1,0 +1,424 @@
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header nav {
+    padding: 0.5rem 0;
+    background: #444;
+    text-align: center;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    color: #fff;
+    margin-top: 30px;
+}
+
+/* Página Principal - index.html */
+#maquinas h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.maquina-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.maquina-card img {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.maquina-card h3 {
+    margin-bottom: 10px;
+}
+
+.maquina-card a {
+    text-decoration: none;
+    color: #333;
+}
+
+.maquina-card a:hover h3 {
+    color: #007bff;
+}
+
+/* Página de Detalhes - desnatadeira_inversor_atv630.html */
+#detalhes-maquina h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.info-maquina {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.imagem-maquina-detalhe {
+    max-width: 300px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.info-maquina p {
+    flex-basis: calc(100% - 320px);
+}
+
+#parametros-inversor h3, #situacoes-manutencao h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filtros {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filtros input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-width: 200px;
+}
+
+.filtros select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-width: 200px;
+}
+
+#listaParametros {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.parametro-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.parametro-card h4 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.parametro-card p {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.parametro-card strong {
+    color: #555;
+}
+
+.notas-importantes {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-left: 5px solid #007bff;
+    border-radius: 5px;
+}
+
+.notas-importantes p {
+    margin-bottom: 10px;
+}
+
+/* Estilos para o Modal de Componentes */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.modal-content ul li {
+    margin-bottom: 8px;
+}
+
+.botao-componentes {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.botao-componentes:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para Situações de Manutenção */
+.botao-adicionar {
+    background-color: #28a745; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem; 
+    margin-bottom: 20px;
+    display: inline-flex; 
+    align-items: center;
+}
+
+.botao-adicionar .plus-icon {
+    font-size: 1.5rem; 
+    margin-left: 5px; 
+    font-weight: bold;
+}
+
+.botao-adicionar:hover {
+    background-color: #1e7e34;
+}
+
+.situacao-item {
+    background: #fff;
+    /* border: 1px solid #ddd; Removido para usar borda apenas no header */
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adiciona uma sombra sutil */
+}
+
+.situacao-header {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    margin-bottom: 10px;
+    border: 2px solid #ccc; /* Borda padrão inicial */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Cores da borda por status */
+.situacao-header.status-pendente { border-color: red; }
+.situacao-header.status-em_analise { border-color: yellow; }
+.situacao-header.status-aguardando_confirmacao { border-color: orange; }
+.situacao-header.status-cancelado { border-color: grey; }
+.situacao-header.status-concluido { border-color: green; }
+
+.nome-situacao {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    margin-right: 10px;
+    font-weight: bold; 
+}
+
+.status-situacao {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    min-width: 180px; /* Aumentado para melhor visualização */
+    text-align: center;
+    font-weight: bold;
+}
+
+.observacao-container {
+    position: relative; /* Para posicionar o botão de upload */
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid blue; 
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.observacao-situacao {
+    width: 100%; 
+    padding: 10px;
+    padding-right: 130px; /* Espaço para o botão Escolher Arquivo */
+    border: none; /* Removida borda do textarea, já que o container tem */
+    border-radius: 0; /* Sem borda arredondada para o textarea */
+    min-height: 80px; 
+    box-sizing: border-box;
+    resize: vertical; /* Permite redimensionamento vertical */
+}
+
+.btn-escolher-arquivo {
+    position: absolute;
+    top: 5px; /* Ajuste fino da posição */
+    right: 5px; /* Ajuste fino da posição */
+    padding: 6px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-escolher-arquivo:hover {
+    background-color: #e0e0e0;
+}
+
+.preview-imagem-situacao {
+    max-width: 100%;
+    max-height: 150px; /* Reduzido para não ocupar tanto espaço */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px; /* Espaço do container de observação */
+    display: block; 
+}
+
+.btn-remover-situacao {
+    background-color: #dc3545; 
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    float: right; 
+    margin-top: 10px; 
+}
+
+.btn-remover-situacao:hover {
+    background-color: #c82333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .info-maquina {
+        flex-direction: column;
+        align-items: center;
+    }
+    .imagem-maquina-detalhe {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .info-maquina p {
+        flex-basis: 100%;
+        text-align: center;
+    }
+    .filtros {
+        flex-direction: column;
+    }
+    .filtros input[type="text"],
+    .filtros select {
+        width: 100%;
+    }
+    .situacao-header {
+        flex-direction: column; 
+        align-items: stretch; 
+    }
+    .nome-situacao {
+        margin-right: 0;
+        margin-bottom: 10px; 
+    }
+    .status-situacao {
+        width: 100%; 
+    }
+    .observacao-situacao {
+        padding-right: 10px; /* Ajuste para telas menores se o botão sobrepor */
+    }
+    .btn-escolher-arquivo {
+        position: static; /* Volta ao fluxo normal em telas pequenas */
+        display: block; /* Ocupa a largura */
+        width: calc(100% - 20px); /* Ajusta para padding do container */
+        margin-top: 5px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+

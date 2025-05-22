@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desnatadeira Padronizadora - Parâmetros do Inversor ATV630</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Uai Manutenção</h1>
+        <nav>
+            <a href="index.html">Página Inicial</a> &gt; Desnatadeira Padronizadora
+        </nav>
+    </header>
+
+    <main>
+        <section id="detalhes-maquina">
+            <h2>Desnatadeira Padronizadora - Inversor ATV630</h2>
+            <div class="info-maquina">
+                <img src="images/1000126991.jpg" alt="Desnatadeira Padronizadora" class="imagem-maquina-detalhe">
+                <p><strong>Modelo do Inversor:</strong> ATV630 (Schneider Electric)</p>
+                <button id="btnComponentes" class="botao-componentes" onclick="abrirModalComponentes()">Componentes</button>
+                <p><strong>Contexto de Operação:</strong> Estes parâmetros referem-se à configuração atual do inversor, operando em modo manual diretamente pela IHM. O CLP e a IHM principal da máquina estão desativados.</p>
+            </div>
+        </section>
+
+        <section id="situacoes-manutencao">
+            <h3>Situações de Manutenção</h3>
+            <button id="btnAdicionarSituacao" class="botao-adicionar">Adicionar<span class="plus-icon">+</span></button>
+            <div id="listaSituacoes">
+                <!-- Situações de manutenção serão adicionadas aqui -->
+            </div>
+        </section>
+
+        <section id="parametros-inversor">
+            <h3>Parâmetros do Inversor</h3>
+            <div class="filtros">
+                <input type="text" id="caixaPesquisa" onkeyup="filtrarParametros()" placeholder="Pesquisar parâmetros por nome ou código...">
+                <select id="filtroCategoria" onchange="filtrarParametros()">
+                    <option value="">Todas as Categorias</option>
+                    <option value="comunicacao">Comunicação</option>
+                    <option value="motor">Controle do Motor</option>
+                    <option value="ihm">IHM</option>
+                    <option value="diagnosticos">Diagnósticos</option>
+                    <option value="alarmes">Alarmes</option>
+                </select>
+            </div>
+            <div id="listaParametros">
+                <p>Carregando parâmetros...</p>
+            </div>
+            <div class="notas-importantes">
+                <p><strong>Atenção:</strong> Os valores exibidos em "Valor Configurado (IHM)" foram obtidos através da análise das imagens fornecidas da interface do inversor e devem ser usados como referência. Recomenda-se verificação.</p>
+                <p>Para informações completas e detalhadas sobre cada parâmetro, suas funções e configurações de fábrica, consulte o Manual de Programação do ATV630 (arquivo <code>ATV630.pdf</code> que foi fornecido).</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Uai Manutenção. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal de Componentes -->
+    <div id="modalComponentes" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalComponentes()">&times;</span>
+            <h3>Principais Componentes da Desnatadeira</h3>
+            <ul>
+                <li>Centrífuga da desnatadeira</li>
+                <li>Motor que gira a centrífuga</li>
+                <li>Painel com IHM Allen-Bradley PanelView 1000</li>
+                <li>CLP Allen-Bradley MicroLogix 1100</li>
+                <li>Fonte 24V</li>
+                <li>Transformador 380V para 110V e 220V</li>
+                <li>Potenciômetro</li>
+                <li>Disjuntores</li>
+                <li>Contatores</li>
+                <li>Relé para monitorar fase</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

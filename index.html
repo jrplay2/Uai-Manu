@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uai Manutenção</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Uai Manutenção</h1>
+    </header>
+
+    <main>
+        <section id="nossas-maquinas">
+            <h2>Nossas Máquinas</h2>
+            <div class="maquinas-grid">
+                <div class="maquina-card">
+                    <a href="/desnatadeira">
+                        <img src="{{ url_for('static', filename='img/desnatadeira.jpg') }}" alt="Desnatadeira Padronizadora" class="imagem-maquina">
+                        <h3>Desnatadeira Padronizadora</h3>
+                        <p>Detalhes de manutenção e parâmetros do inversor ATV630.</p>
+                    </a>
+                </div>
+                <div class="maquina-card">
+                    <a href="/wse250">
+                        <img src="{{ url_for('static', filename='img/wse250.jpg') }}" alt="Máquina de Solda WSE250" class="imagem-maquina">
+                        <h3>Máquina de Solda WSE250</h3>
+                        <p>Detalhes técnicos, parâmetros e lista de itens para operação.</p>
+                    </a>
+                </div>
+                <!-- Mais máquinas podem ser adicionadas aqui no futuro -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Uai Manutenção. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

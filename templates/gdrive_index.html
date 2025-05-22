@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador do Google Drive - Uai Manutenção</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #0055aa;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ccc;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .upload-area:hover {
+            border-color: #0066cc;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .flash-message {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .flash-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Uai Manutenção - Gerenciador do Google Drive</h1>
+            <nav>
+                <a href="/" class="btn">Voltar para o Site</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <section class="card">
+            <h2>Upload de Arquivos</h2>
+            <p>Faça upload de imagens e documentos para o Google Drive.</p>
+            
+            <div class="upload-area" id="dropArea">
+                <p>Arraste e solte arquivos aqui ou</p>
+                <input type="file" id="fileInput" class="hidden">
+                <button class="btn" onclick="document.getElementById('fileInput').click()">Selecionar Arquivo</button>
+            </div>
+            
+            <div id="uploadProgress" class="hidden">
+                <p>Enviando arquivo... <span id="progressText">0%</span></p>
+                <progress id="progressBar" value="0" max="100"></progress>
+            </div>
+            
+            <div id="uploadResult" class="hidden">
+                <h3>Arquivo enviado com sucesso!</h3>
+                <p>URL do arquivo: <a id="fileUrl" target="_blank"></a></p>
+            </div>
+        </section>
+        
+        <section class="card">
+            <h2>Salvar Dados</h2>
+            <p>Salve informações sobre máquinas e equipamentos.</p>
+            
+            <form id="dataForm">
+                <div>
+                    <label for="machineName">Nome da Máquina:</label>
+                    <input type="text" id="machineName" required>
+                </div>
+                
+                <div>
+                    <label for="machineStatus">Status:</label>
+                    <select id="machineStatus">
+                        <option value="Operacional">Operacional</option>
+                        <option value="Em Manutenção">Em Manutenção</option>
+                        <option value="Desativada">Desativada</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="machineNotes">Observações:</label>
+                    <textarea id="machineNotes" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Salvar Dados</button>
+            </form>
+            
+            <div id="dataSaveResult" class="hidden">
+                <p>Dados salvos com sucesso!</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Uai Manutenção. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Configuração do upload de arquivos
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const uploadResult = document.getElementById('uploadResult');
+        const fileUrl = document.getElementById('fileUrl');
+        
+        // Configuração do formulário de dados
+        const dataForm = document.getElementById('dataForm');
+        const dataSaveResult = document.getElementById('dataSaveResult');
+        
+        // Prevenir comportamento padrão de arrastar e soltar
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // Destacar área de upload quando arrastar arquivo
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.style.borderColor = '#0066cc';
+            dropArea.style.backgroundColor = '#f0f8ff';
+        }
+        
+        function unhighlight() {
+            dropArea.style.borderColor = '#ccc';
+            dropArea.style.backgroundColor = '';
+        }
+        
+        // Lidar com o arquivo solto na área de upload
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                uploadFile(files[0]);
+            }
+        }
+        
+        // Lidar com a seleção de arquivo pelo input
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                uploadFile(this.files[0]);
+            }
+        });
+        
+        // Função para fazer upload do arquivo
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            // Mostrar progresso
+            uploadProgress.classList.remove('hidden');
+            uploadResult.classList.add('hidden');
+            
+            const xhr = new XMLHttpRequest();
+            
+            // Configurar eventos de progresso
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    progressBar.value = percentComplete;
+                    progressText.textContent = percentComplete + '%';
+                }
+            });
+            
+            // Configurar evento de conclusão
+            xhr.addEventListener('load', function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    
+                    if (response.success) {
+                        uploadResult.classList.remove('hidden');
+                        fileUrl.href = response.file_url;
+                        fileUrl.textContent = response.file_url;
+                    } else {
+                        alert('Erro ao fazer upload: ' + response.error);
+                    }
+                } else {
+                    alert('Erro ao fazer upload. Status: ' + xhr.status);
+                }
+                
+                uploadProgress.classList.add('hidden');
+            });
+            
+            // Configurar evento de erro
+            xhr.addEventListener('error', function() {
+                alert('Erro de conexão ao fazer upload');
+                uploadProgress.classList.add('hidden');
+            });
+            
+            // Enviar o arquivo
+            xhr.open('POST', '/gdrive/upload');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send(formData);
+        }
+        
+        // Lidar com o envio do formulário de dados
+        dataForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const data = {
+                nome: document.getElementById('machineName').value,
+                status: document.getElementById('machineStatus').value,
+                observacoes: document.getElementById('machineNotes').value,
+                data_atualizacao: new Date().toISOString()
+            };
+            
+            // Enviar os dados
+            fetch('/gdrive/save_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    dataSaveResult.classList.remove('hidden');
+                    dataForm.reset();
+                    
+                    // Esconder a mensagem após 3 segundos
+                    setTimeout(() => {
+                        dataSaveResult.classList.add('hidden');
+                    }, 3000);
+                } else {
+                    alert('Erro ao salvar dados: ' + result.error);
+                }
+            })
+            .catch(error => {
+                alert('Erro ao salvar dados: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>

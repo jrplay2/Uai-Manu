@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Arquivos - Uai Manutenção</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #0055aa;
+        }
+        
+        .upload-form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .flash-message {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .flash-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Upload de Arquivos - Uai Manutenção</h1>
+            <nav>
+                <a href="/gdrive" class="btn">Voltar para o Gerenciador</a>
+                <a href="/" class="btn">Voltar para o Site</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <section class="card">
+            <h2>Upload de Arquivo para o Google Drive</h2>
+            <p>Selecione um arquivo para fazer upload para o Google Drive.</p>
+            
+            <form action="{{ url_for('gdrive.upload_file') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="form-group">
+                    <label for="file">Selecione um arquivo:</label>
+                    <input type="file" name="file" id="file" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Descrição (opcional):</label>
+                    <textarea name="description" id="description" rows="3" class="form-control"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Fazer Upload</button>
+            </form>
+        </section>
+        
+        <section class="card">
+            <h2>Tipos de Arquivo Permitidos</h2>
+            <ul>
+                <li>Imagens: .jpg, .jpeg, .png, .gif, .webp</li>
+                <li>Documentos: .pdf, .doc, .docx</li>
+                <li>Planilhas: .xls, .xlsx</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Uai Manutenção. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

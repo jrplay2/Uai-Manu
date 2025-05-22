@@ -1,0 +1,40 @@
+# Lista de Tarefas - Atualização do Relatório de Manutenção "Uai Manutenção" (Novo Lote de Imagens)
+
+- [X] **Passo 001: Extrair informações relevantes das novas imagens enviadas (1000131452.jpg a 1000131371.jpg) sobre parâmetros e painéis**
+    - [X] Executar OCR em 1000131452.jpg
+    - [X] Executar OCR em 1000131449.jpg
+    - [X] Executar OCR em 1000131448.jpg
+    - [X] Executar OCR em 1000131447.jpg
+    - [X] Executar OCR em 1000131446.jpg
+    - [X] Executar OCR em 1000131445.jpg
+    - [X] Executar OCR em 1000131444.jpg
+    - [X] Executar OCR em 1000131443.jpg
+    - [X] Executar OCR em 1000131442.jpg
+    - [X] Executar OCR em 1000131441.jpg
+    - [X] Executar OCR em 1000131362.jpg
+    - [X] Executar OCR em 1000131363.jpg
+    - [X] Executar OCR em 1000131364.jpg
+    - [X] Executar OCR em 1000131365.jpg
+    - [X] Executar OCR em 1000131366.jpg
+    - [X] Executar OCR em 1000131367.jpg
+    - [X] Executar OCR em 1000131370.jpg
+    - [X] Executar OCR em 1000131369.jpg
+    - [X] Executar OCR em 1000131368.jpg
+    - [X] Executar OCR em 1000131371.jpg
+- [X] **Passo 002: Analisar se as imagens complementam os parâmetros da desnatadeira padronizadora ou representam uma nova máquina/seção**
+    - [X] Ler e analisar o conteúdo de 1000131452_texto.txt
+    - [X] Ler e analisar o conteúdo de 1000131449_texto.txt
+    - [X] ... (continuar para todos os 20 arquivos de texto extraídos)
+- [X] **Passo 003: Organizar e categorizar os parâmetros extraídos das novas imagens, cruzando com os dados já existentes no sistema**
+    - [X] Consolidar os parâmetros extraídos em um formato estruturado (ex: Markdown ou JSON) - *Resultado: Nenhum parâmetro estruturado utilizável foi extraído das novas imagens.*
+    - [X] Comparar com os parâmetros já existentes (do PDF e das primeiras imagens) para evitar duplicidade e identificar novos parâmetros - *Resultado: N/A devido à falta de novos parâmetros.*
+    - [X] Categorizar os novos parâmetros conforme a estrutura do inversor ATV630 (se aplicável) ou criar novas categorias se necessário - *Resultado: N/A devido à falta de novos parâmetros.*
+    - [X] Integrar os novos parâmetros ao arquivo `parametros_inversor_consolidado.md` (ou similar). - *Resultado: N/A devido à falta de novos parâmetros.*
+- [X] **Passo 005: Atualizar o layout e conteúdo da página online, refletindo as novas informações e parâmetros** - *Resultado: N/A devido à falta de novos parâmetros.*
+    - [X] Modificar o arquivo `desnatadeira_inversor_atv630.html` para incluir os novos parâmetros. - *Resultado: N/A.*
+    - [X] Garantir que a funcionalidade de busca e filtro contemple os novos dados. - *Resultado: N/A.*
+- [X] **Passo 006: Validar se as informações das novas imagens estão integradas e acessíveis de forma clara e funcional no site** - *Resultado: N/A devido à falta de novos parâmetros para integrar.*
+    - [X] Testar a exibição dos novos parâmetros na página. - *Resultado: N/A.*
+    - [X] Verificar a funcionalidade de busca e filtro com os novos dados. - *Resultado: N/A.*
+    - [X] Verificar a responsividade e a clareza da apresentação. - *Resultado: N/A.*
+- [X] **Passo 007: Disponibilizar novamente o link de visualização online para revisão do usuário** - *Resultado: N/A, pois não houve alterações no site. O link anterior permanece válido se ainda estiver ativo, mas nenhuma nova funcionalidade ou dado foi adicionado.*

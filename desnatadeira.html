@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desnatadeira Padronizadora - Uai Manutenção</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Uai Manutenção</h1>
+        <nav>
+            <a href="/">Página Inicial</a> &gt; Desnatadeira Padronizadora
+        </nav>
+    </header>
+
+    <main>
+        <section id="detalhes-maquina">
+            <h2>Desnatadeira Padronizadora</h2>
+            <div class="info-maquina">
+                <img src="{{ url_for('static', filename='img/desnatadeira.jpg') }}" alt="Desnatadeira Padronizadora" class="imagem-maquina-detalhe">
+                <p><strong>Modelo do Inversor:</strong> ATV630 (Schneider Electric)</p>
+                <button id="btnComponentes" class="botao-componentes" onclick="abrirModalComponentes()">Componentes</button>
+            </div>
+        </section>
+
+        <section id="situacoes-manutencao">
+            <h3>Situações de Manutenção</h3>
+            <button id="btnAdicionarSituacao" class="botao-adicionar">Adicionar<span class="plus-icon">+</span></button>
+            <div id="listaSituacoes">
+                <!-- Situações de manutenção serão adicionadas aqui -->
+            </div>
+        </section>
+
+        <section id="parametros-inversor">
+            <h3>Parâmetros do Inversor</h3>
+            <div class="filtros">
+                <input type="text" id="caixaPesquisa" onkeyup="filtrarParametros()" placeholder="Pesquisar parâmetros...">
+                <select id="filtroCategoria" onchange="filtrarParametros()">
+                    <option value="">Todas as Categorias</option>
+                    <option value="configuracao">Configuração</option>
+                    <option value="motor">Motor</option>
+                    <option value="controle">Controle</option>
+                    <option value="io">I/O</option>
+                    <option value="comunicacao">Comunicação</option>
+                </select>
+            </div>
+            <div id="listaParametros">
+                <!-- Parâmetros do inversor serão carregados aqui -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Uai Manutenção. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal de Componentes -->
+    <div id="modalComponentes" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalComponentes()">&times;</span>
+            <h3>Principais Componentes da Desnatadeira</h3>
+            <ul>
+                <li>A centrífuga da desnatadeira</li>
+                <li>O motor que gira a centrífuga</li>
+                <li>No painel um IHM Allen-Bradley PainelView 1000</li>
+                <li>CLP Allen-Bradley MicroLogix 1100</li>
+                <li>Fonte 24V</li>
+                <li>Transformador 380V para 110V e 220V</li>
+                <li>Potenciômetro</li>
+                <li>Disjuntores e contatores</li>
+                <li>Relé para monitorar fase</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Parâmetros do inversor
+            const parametrosInversor = [
+                {
+                    codigo: "P1-01",
+                    nome: "Frequência de Saída",
+                    valorConfigurado: "60 Hz",
+                    descricao: "Frequência de operação do motor.",
+                    faixaValores: "0-400 Hz",
+                    unidade: "Hz",
+                    valorFabrica: "60 Hz",
+                    categoria: "motor"
+                },
+                {
+                    codigo: "P1-02",
+                    nome: "Velocidade do Motor",
+                    valorConfigurado: "1750 RPM",
+                    descricao: "Velocidade nominal de rotação do motor.",
+                    faixaValores: "0-9999 RPM",
+                    unidade: "RPM",
+                    valorFabrica: "1500 RPM",
+                    categoria: "motor"
+                },
+                {
+                    codigo: "P1-03",
+                    nome: "Corrente do Motor",
+                    valorConfigurado: "4.8 A",
+                    descricao: "Corrente nominal do motor.",
+                    faixaValores: "0.1-999.9 A",
+                    unidade: "A",
+                    valorFabrica: "Depende do modelo",
+                    categoria: "motor"
+                },
+                {
+                    codigo: "P2-01",
+                    nome: "Rampa de Aceleração",
+                    valorConfigurado: "3.0 s",
+                    descricao: "Tempo para acelerar de 0 Hz até a frequência máxima.",
+                    faixaValores: "0.0-6000.0 s",
+                    unidade: "s",
+                    valorFabrica: "3.0 s",
+                    categoria: "controle"
+                },
+                {
+                    codigo: "P2-02",
+                    nome: "Rampa de Desaceleração",
+                    valorConfigurado: "3.0 s",
+                    descricao: "Tempo para desacelerar da frequência máxima até 0 Hz.",
+                    faixaValores: "0.0-6000.0 s",
+                    unidade: "s",
+                    valorFabrica: "3.0 s",
+                    categoria: "controle"
+                },
+                {
+                    codigo: "P3-01",
+                    nome: "Ganho Proporcional",
+                    valorConfigurado: "30",
+                    descricao: "Ganho proporcional do controlador PID.",
+                    faixaValores: "0-1000",
+                    unidade: "",
+                    valorFabrica: "30",
+                    categoria: "controle"
+                },
+                {
+                    codigo: "P3-02",
+                    nome: "Tempo Integral",
+                    valorConfigurado: "0.5 s",
+                    descricao: "Tempo integral do controlador PID.",
+                    faixaValores: "0.01-10.00 s",
+                    unidade: "s",
+                    valorFabrica: "0.5 s",
+                    categoria: "controle"
+                },
+                {
+                    codigo: "P4-01",
+                    nome: "Configuração Entrada Digital 1",
+                    valorConfigurado: "Marcha",
+                    descricao: "Função da entrada digital 1.",
+                    faixaValores: "Diversas funções",
+                    unidade: "",
+                    valorFabrica: "Marcha",
+                    categoria: "io"
+                },
+                {
+                    codigo: "P4-02",
+                    nome: "Configuração Entrada Digital 2",
+                    valorConfigurado: "Parada",
+                    descricao: "Função da entrada digital 2.",
+                    faixaValores: "Diversas funções",
+                    unidade: "",
+                    valorFabrica: "Parada",
+                    categoria: "io"
+                },
+                {
+                    codigo: "P5-01",
+                    nome: "Endereço de Comunicação",
+                    valorConfigurado: "1",
+                    descricao: "Endereço do inversor na rede de comunicação.",
+                    faixaValores: "1-247",
+                    unidade: "",
+                    valorFabrica: "1",
+                    categoria: "comunicacao"
+                },
+                {
+                    codigo: "P5-02",
+                    nome: "Velocidade de Comunicação",
+                    valorConfigurado: "19200 bps",
+                    descricao: "Taxa de transmissão da comunicação serial.",
+                    faixaValores: "4800, 9600, 19200, 38400 bps",
+                    unidade: "bps",
+                    valorFabrica: "19200 bps",
+                    categoria: "comunicacao"
+                },
+                {
+                    codigo: "P6-01",
+                    nome: "Modo de Controle",
+                    valorConfigurado: "V/F",
+                    descricao: "Método de controle do motor.",
+                    faixaValores: "V/F, SVC, FOC",
+                    unidade: "",
+                    valorFabrica: "V/F",
+                    categoria: "configuracao"
+                },
+                {
+                    codigo: "P6-02",
+                    nome: "Fonte de Comando",
+                    valorConfigurado: "Terminal",
+                    descricao: "Origem dos comandos de operação.",
+                    faixaValores: "Teclado, Terminal, Comunicação",
+                    unidade: "",
+                    valorFabrica: "Teclado",
+                    categoria: "configuracao"
+                }
+            ];
+
+            // Função para exibir os parâmetros
+            function exibirParametros(parametros) {
+                const listaParametrosDiv = document.getElementById('listaParametros');
+                if (!listaParametrosDiv) return;
+                
+                listaParametrosDiv.innerHTML = '';
+                if (parametros.length === 0) {
+                    listaParametrosDiv.innerHTML = '<p>Nenhum parâmetro encontrado com os critérios selecionados.</p>';
+                    return;
+                }
+                
+                parametros.forEach(param => {
+                    const card = document.createElement('div');
+                    card.classList.add('parametro-card');
+                    card.setAttribute('data-categoria', param.categoria.toLowerCase());
+                    
+                    card.innerHTML = `
+                        <h4>${param.codigo}: ${param.nome}</h4>
+                        <p><strong>Valor Configurado:</strong> ${param.valorConfigurado}</p>
+                        <p><strong>Descrição:</strong> ${param.descricao}</p>
+                        <p><strong>Faixa de Valores:</strong> ${param.faixaValores} ${param.unidade}</p>
+                        <p><strong>Valor de Fábrica:</strong> ${param.valorFabrica}</p>
+                        <p><strong>Categoria:</strong> ${param.categoria}</p>
+                    `;
+                    
+                    listaParametrosDiv.appendChild(card);
+                });
+            }
+
+            // Função para filtrar parâmetros
+            window.filtrarParametros = function() {
+                const textoPesquisa = document.getElementById('caixaPesquisa').value.toLowerCase();
+                const categoriaFiltro = document.getElementById('filtroCategoria').value.toLowerCase();
+                
+                const parametrosFiltrados = parametrosInversor.filter(param => {
+                    const matchTexto = param.nome.toLowerCase().includes(textoPesquisa) || 
+                                      param.descricao.toLowerCase().includes(textoPesquisa) ||
+                                      param.codigo.toLowerCase().includes(textoPesquisa);
+                    
+                    const matchCategoria = categoriaFiltro === '' || param.categoria.toLowerCase() === categoriaFiltro;
+                    
+                    return matchTexto && matchCategoria;
+                });
+                
+                exibirParametros(parametrosFiltrados);
+            };
+
+            // Exibir todos os parâmetros inicialmente
+            exibirParametros(parametrosInversor);
+
+            // Funções para o modal de componentes
+            window.abrirModalComponentes = function() {
+                document.getElementById('modalComponentes').style.display = 'block';
+            };
+
+            window.fecharModalComponentes = function() {
+                document.getElementById('modalComponentes').style.display = 'none';
+            };
+
+            // Fechar modal ao clicar fora dele
+            window.onclick = function(event) {
+                const modal = document.getElementById('modalComponentes');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        });
+    </script>
+</body>
+</html>

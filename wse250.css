@@ -1,0 +1,150 @@
+/* Estilos para a página WSE250 */
+
+/* Estilos para a lista de itens faltantes */
+.lista-itens-faltantes {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.lista-itens-faltantes h4 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.item-faltante {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 5px;
+    transition: background-color 0.2s;
+}
+
+.item-faltante:hover {
+    background-color: #f0f0f0;
+}
+
+.checkbox-item {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.item-adquirido {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Estilos para as cores de status */
+.status-pendente {
+    border: 2px solid #ff0000 !important; /* Vermelho */
+}
+
+.status-em_analise {
+    border: 2px solid #ffff00 !important; /* Amarelo */
+}
+
+.status-aguardando_confirmacao {
+    border: 2px solid #ff8c00 !important; /* Laranja */
+}
+
+.status-cancelado {
+    border: 2px solid #808080 !important; /* Cinza */
+}
+
+.status-concluido {
+    border: 2px solid #008000 !important; /* Verde */
+}
+
+/* Estilos para o botão de escolher arquivo */
+.btn-escolher-arquivo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.btn-escolher-arquivo:hover {
+    background-color: #e0e0e0;
+}
+
+/* Ajustes para a área de observações */
+.observacao-container {
+    position: relative;
+    padding-right: 120px; /* Espaço para o botão de arquivo */
+}
+
+.observacao-situacao {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+/* Estilos para o erro de carregamento */
+.erro-carregamento {
+    color: #d9534f;
+    padding: 10px;
+    background-color: #f2dede;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+/* Ajustes para os parâmetros da máquina */
+.parametro-card {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.parametro-card h4 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .situacao-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .situacao-header select {
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .nome-situacao {
+        width: 100%;
+    }
+    
+    .btn-escolher-arquivo {
+        position: static;
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    .observacao-container {
+        padding-right: 0;
+    }
+}

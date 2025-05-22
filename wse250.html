@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máquina de Solda WSE250 - Uai Manutenção</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Uai Manutenção</h1>
+        <nav>
+            <a href="/">Página Inicial</a> &gt; Máquina de Solda WSE250
+        </nav>
+    </header>
+
+    <main>
+        <section id="detalhes-maquina">
+            <h2>Máquina de Solda WSE250</h2>
+            <div class="info-maquina">
+                <img src="{{ url_for('static', filename='img/wse250.jpg') }}" alt="Máquina de Solda WSE250" class="imagem-maquina-detalhe">
+                <p><strong>Modelo:</strong> WSE250 (TIG AC/DC e MMA)</p>
+                <button id="btnComponentes" class="botao-componentes" onclick="abrirModalComponentes()">Componentes</button>
+                <p><strong>Contexto de Operação:</strong> Máquina de solda multiprocesso para soldagem TIG (aço carbono, inox, alumínio) e MMA (eletrodo revestido). Fabricação chinesa, conforme norma EN 60974-1.</p>
+            </div>
+        </section>
+
+        <section id="situacoes-manutencao">
+            <h3>Situações de Manutenção</h3>
+            <button id="btnAdicionarSituacao" class="botao-adicionar">Adicionar<span class="plus-icon">+</span></button>
+            <div id="listaSituacoes">
+                <!-- Situações de manutenção serão adicionadas aqui -->
+                <div class="situacao-item">
+                    <div class="situacao-header status-pendente">
+                        <input type="text" value="Itens Faltantes para Operação" class="nome-situacao" readonly>
+                        <select class="status-situacao">
+                            <option value="pendente" selected>Pendente</option>
+                            <option value="em_analise">Em Análise</option>
+                            <option value="aguardando_confirmacao">Aguardando Confirmação</option>
+                            <option value="cancelado">Cancelado</option>
+                            <option value="concluido">Concluído</option>
+                        </select>
+                    </div>
+                    <div class="observacao-container">
+                        <div class="lista-itens-faltantes">
+                            <h4>GÁS</h4>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="gas-1" class="checkbox-item">
+                                <label for="gas-1">Válvula reguladora com manômetro duplo para argônio</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="gas-2" class="checkbox-item">
+                                <label for="gas-2">Fluxômetro com bico de 6 mm (pode vir junto com o regulador)</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="gas-3" class="checkbox-item">
+                                <label for="gas-3">Mangueira de gás (PVC/PU) com engate ou braçadeiras</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="gas-4" class="checkbox-item">
+                                <label for="gas-4">Adaptador 1/4" NPT (se necessário)</label>
+                            </div>
+                            
+                            <h4>TOCHA TIG</h4>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="tocha-1" class="checkbox-item">
+                                <label for="tocha-1">Tocha TIG tipo SR-26 ou WP-26 (com conector e acionamento)</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="tocha-2" class="checkbox-item">
+                                <label for="tocha-2">Tungstênios: vermelho (aço), verde/roxo (alumínio)</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="tocha-3" class="checkbox-item">
+                                <label for="tocha-3">Bicos cerâmicos: tamanhos #5, #6, #7</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="tocha-4" class="checkbox-item">
+                                <label for="tocha-4">Collets e porta-collets: 1,6 mm, 2,4 mm, 3,2 mm</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="tocha-5" class="checkbox-item">
+                                <label for="tocha-5">Tampa traseira da tocha</label>
+                            </div>
+                            
+                            <h4>MMA (ELETRODO)</h4>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="mma-1" class="checkbox-item">
+                                <label for="mma-1">Porta eletrodo com cabo (mínimo 10 mm², 3 m)</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="mma-2" class="checkbox-item">
+                                <label for="mma-2">Garra negativa/terra com cabo (mínimo 10 mm², 3 m)</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="mma-3" class="checkbox-item">
+                                <label for="mma-3">Eletrodos (E6013, E7018, etc.)</label>
+                            </div>
+                            
+                            <h4>EPIs (EQUIPAMENTOS DE PROTEÇÃO)</h4>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="epi-1" class="checkbox-item">
+                                <label for="epi-1">Máscara de solda automática (escurecimento DIN 9-13)</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="epi-2" class="checkbox-item">
+                                <label for="epi-2">Luvas de raspa</label>
+                            </div>
+                            <div class="item-faltante">
+                                <input type="checkbox" id="epi-3" class="checkbox-item">
+                                <label for="epi-3">Avental de raspa</label>
+                            </div>
+                        </div>
+                        <input type="file" id="imagemSituacao-itens-faltantes" class="imagem-situacao-input" accept="image/*" style="display:none;">
+                        <button class="btn-escolher-arquivo" onclick="document.getElementById('imagemSituacao-itens-faltantes').click()">Escolher Arquivo</button>
+                    </div>
+                    <img src="#" alt="Imagem da situação" class="preview-imagem-situacao" style="display:none; max-width: 200px; margin-top: 10px;">
+                </div>
+            </div>
+        </section>
+
+        <section id="parametros-maquina">
+            <h3>Especificações da Máquina</h3>
+            <div class="filtros">
+                <input type="text" id="caixaPesquisa" onkeyup="filtrarParametros()" placeholder="Pesquisar especificações...">
+                <select id="filtroCategoria" onchange="filtrarParametros()">
+                    <option value="">Todas as Categorias</option>
+                    <option value="alimentacao">Alimentação</option>
+                    <option value="saida">Saída</option>
+                    <option value="funcoes">Funções</option>
+                    <option value="conexoes">Conexões</option>
+                </select>
+            </div>
+            <div id="listaParametros">
+                <!-- Parâmetros da máquina serão carregados aqui -->
+            </div>
+            <div class="notas-importantes">
+                <p><strong>Atenção:</strong> As especificações exibidas foram obtidas através da análise do manual e das imagens fornecidas da máquina e devem ser usadas como referência. Recomenda-se verificação.</p>
+                <p>Para informações completas e detalhadas sobre cada parâmetro, suas funções e configurações, consulte o Manual da WSE250 (arquivo <code>WSE250_Manual_e_Lista.pdf</code> que foi fornecido).</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Uai Manutenção. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal de Componentes -->
+    <div id="modalComponentes" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalComponentes()">&times;</span>
+            <h3>Principais Componentes da Máquina de Solda WSE250</h3>
+            <ul>
+                <li>Display digital de corrente</li>
+                <li>Potenciômetros de ajuste</li>
+                <li>Chave seletora TIG/MMA</li>
+                <li>Chave seletora AC/DC</li>
+                <li>Ventilação forçada dupla</li>
+                <li>Conectores frontais para tocha TIG</li>
+                <li>Conectores para porta-eletrodo e garra negativa</li>
+                <li>Entrada de gás 1/4" NPT</li>
+                <li>Conector para pedal</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Parâmetros da máquina de solda
+            const parametrosWSE250 = [
+                {
+                    codigo: "ALM-1",
+                    nome: "Tensão de Alimentação",
+                    valorConfigurado: "1 × 220V ±10%, 50/60 Hz",
+                    descricao: "Tensão de entrada da máquina de solda.",
+                    faixaValores: "220V ±10%",
+                    unidade: "V",
+                    valorFabrica: "220V",
+                    refImagem: "1000136493.jpg",
+                    categoria: "alimentacao"
+                },
+                {
+                    codigo: "ALM-2",
+                    nome: "Corrente Máxima",
+                    valorConfigurado: "37 A",
+                    descricao: "Corrente máxima de entrada da máquina.",
+                    faixaValores: "0-40 A",
+                    unidade: "A",
+                    valorFabrica: "37 A",
+                    refImagem: "1000136493.jpg",
+                    categoria: "alimentacao"
+                },
+                {
+                    codigo: "ALM-3",
+                    nome: "Corrente Efetiva",
+                    valorConfigurado: "29 A",
+                    descricao: "Corrente efetiva de entrada da máquina.",
+                    faixaValores: "0-30 A",
+                    unidade: "A",
+                    valorFabrica: "29 A",
+                    refImagem: "1000136493.jpg",
+                    categoria: "alimentacao"
+                },
+                {
+                    codigo: "SAI-1",
+                    nome: "Faixa de Corrente/Tensão",
+                    valorConfigurado: "10A/10,4V até 250A/20V",
+                    descricao: "Faixa de corrente e tensão de saída da máquina.",
+                    faixaValores: "10-250 A",
+                    unidade: "A/V",
+                    valorFabrica: "10-250 A",
+                    refImagem: "1000136490.jpg",
+                    categoria: "saida"
+                },
+                {
+                    codigo: "SAI-2",
+                    nome: "Tensão em Vazio",
+                    valorConfigurado: "56 V",
+                    descricao: "Tensão em circuito aberto (sem carga).",
+                    faixaValores: "50-60 V",
+                    unidade: "V",
+                    valorFabrica: "56 V",
+                    refImagem: "1000136493.jpg",
+                    categoria: "saida"
+                },
+                {
+                    codigo: "SAI-3",
+                    nome: "Ciclo de Trabalho 60%",
+                    valorConfigurado: "250 A",
+                    descricao: "Corrente máxima para ciclo de trabalho de 60%.",
+                    faixaValores: "0-250 A",
+                    unidade: "A",
+                    valorFabrica: "250 A",
+                    refImagem: "1000136493.jpg",
+                    categoria: "saida"
+                },
+                {
+                    codigo: "SAI-4",
+                    nome: "Ciclo de Trabalho 100%",
+                    valorConfigurado: "193 A",
+                    descricao: "Corrente máxima para ciclo de trabalho de 100%.",
+                    faixaValores: "0-200 A",
+                    unidade: "A",
+                    valorFabrica: "193 A",
+                    refImagem: "1000136493.jpg",
+                    categoria: "saida"
+                },
+                {
+                    codigo: "FUN-1",
+                    nome: "Processos de Soldagem",
+                    valorConfigurado: "TIG AC/DC, MMA",
+                    descricao: "Processos de soldagem disponíveis na máquina.",
+                    faixaValores: "TIG AC, TIG DC, MMA",
+                    unidade: "N/A",
+                    valorFabrica: "TIG AC/DC, MMA",
+                    refImagem: "1000136489.jpg",
+                    categoria: "funcoes"
+                },
+                {
+                    codigo: "FUN-2",
+                    nome: "Ajustes TIG",
+                    valorConfigurado: "Pré/pós fluxo, rampa, corrente",
+                    descricao: "Ajustes disponíveis para soldagem TIG.",
+                    faixaValores: "Diversos",
+                    unidade: "N/A",
+                    valorFabrica: "Diversos",
+                    refImagem: "1000136489.jpg",
+                    categoria: "funcoes"
+                },
+                {
+                    codigo: "CON-1",
+                    nome: "Entrada de Gás",
+                    valorConfigurado: "1/4\" NPT",
+                    descricao: "Conexão para entrada de gás de proteção.",
+                    faixaValores: "1/4\" NPT",
+                    unidade: "N/A",
+                    valorFabrica: "1/4\" NPT",
+                    refImagem: "1000136492.jpg",
+                    categoria: "conexoes"
+                },
+                {
+                    codigo: "CON-2",
+                    nome: "Conectores Frontais",
+                    valorConfigurado: "Tocha, garra, porta-eletrodo, pedal",
+                    descricao: "Conexões disponíveis no painel frontal.",
+                    faixaValores: "Diversos",
+                    unidade: "N/A",
+                    valorFabrica: "Diversos",
+                    refImagem: "1000136491.jpg",
+                    categoria: "conexoes"
+                }
+            ];
+
+            // Função para exibir os parâmetros
+            function exibirParametros(parametros) {
+                const listaParametrosDiv = document.getElementById('listaParametros');
+                if (!listaParametrosDiv) return;
+                
+                listaParametrosDiv.innerHTML = '';
+                if (parametros.length === 0) {
+                    listaParametrosDiv.innerHTML = '<p>Nenhum parâmetro encontrado com os critérios selecionados.</p>';
+                    return;
+                }
+                
+                parametros.forEach(param => {
+                    const card = document.createElement('div');
+                    card.classList.add('parametro-card');
+                    card.setAttribute('data-categoria', param.categoria.toLowerCase());
+                    let refImagemHtml = p
+(Content truncated due to size limit. Use line ranges to read in chunks)
